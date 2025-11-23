@@ -30,7 +30,6 @@ export default function HomeScreen() {
   const progress = useSharedValue(0);
 
   const getRandomImageUrl = (category: string) => {
-    // Generate a consistent seed based on category name
     const seed = category
       .split("")
       .reduce((acc, char) => acc + char.charCodeAt(0), 0);
