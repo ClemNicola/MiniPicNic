@@ -4,12 +4,14 @@
     "slug": "MiniPicNic",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icons/logo-Picnic.png",
     "scheme": "minipicnic",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./assets/icons/logo-Picnic.png",
+      "bundleIdentifier": "com.anonymous.MiniPicNic"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +32,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/icons/picnic.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
