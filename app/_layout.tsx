@@ -7,7 +7,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
-import "../global.css";
+import "./global.css";
 
 import { SplashScreenAnimate } from "@/components/splash-screen-animate";
 import { useColorScheme } from "@/hooks/use-color-scheme";

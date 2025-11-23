@@ -16,8 +16,8 @@ export default function TabTwoScreen() {
         />
       }
     >
-      <View>
-        <Text>Hello World</Text>
+      <View className="p-4 bg-blue-500 rounded-lg">
+        <Text className="text-white text-2xl font-bold">Hello World</Text>
       </View>
     </ParallaxScrollView>
   );

@@ -1,41 +1,61 @@
-import { Image } from "expo-image";
-import { StyleSheet, Text, View } from "react-native";
-
-import ParallaxScrollView from "@/components/parallax-scroll-view";
+import { api } from "@/services/api";
+import { Product } from "@/types";
+import { useEffect, useMemo, useState } from "react";
+import { Dimensions, Text, View } from "react-native";
+import { useSharedValue } from "react-native-reanimated";
+import Carousel from "react-native-reanimated-carousel";
 
 export default function HomeScreen() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await api.getProducts();
+      setProducts(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const uniqueCategories = useMemo(
+    () => [...new Set(products.map((product) => product.category))],
+    [products]
+  );
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const progress = useSharedValue(0);
+
+  const renderItem = ({ item }: { item: string }) => (
+    <View className="flex-1 justify-center items-center bg-red-500">
+      <Text className="text-2xl font-bold capitalize bg-blue-500">{item}</Text>
+    </View>
+  );
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <View>
-        <Text>Hello World</Text>
-      </View>
-    </ParallaxScrollView>
+    <View id="home-carousel">
+      <Carousel
+        autoPlayInterval={2000}
+        data={uniqueCategories}
+        height={258}
+        loop={true}
+        pagingEnabled={true}
+        snapEnabled={true}
+        width={Dimensions.get("window").width}
+        style={{
+          width: Dimensions.get("window").width,
+        }}
+        mode="parallax"
+        modeConfig={{
+          parallaxScrollingScale: 0.9,
+          parallaxScrollingOffset: 50,
+        }}
+        onProgressChange={progress}
+        renderItem={renderItem}
+      />
+      <Text className="text-2xl font-bold bg-green-500">Hello World</Text>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-});
