@@ -1,10 +1,19 @@
 import ProductGrid from "@/components/product-grid";
 import { api } from "@/services/api";
 import { Product } from "@/types";
+import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { Dimensions, Image, ScrollView, Text, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carousel from "react-native-reanimated-carousel";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -37,7 +46,10 @@ export default function HomeScreen() {
   };
 
   const renderItem = ({ item }: { item: string }) => (
-    <View className="flex-1 justify-center items-center overflow-hidden rounded-3xl mx-2">
+    <Pressable
+      onPress={() => router.push(`/categories/${item}`)}
+      className="flex-1 mx-2 rounded-3xl overflow-hidden"
+    >
       <Image
         source={{ uri: getRandomImageUrl(item) }}
         className="w-full h-full"
@@ -46,39 +58,41 @@ export default function HomeScreen() {
       <View className="absolute inset-0 bg-black/30 justify-center items-center">
         <Text className="text-2xl font-bold capitalize text-white">{item}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 
   return (
-    <ScrollView>
-      <View id="home-carousel" className=" pt-12 pb-6">
-        <Carousel
-          autoPlayInterval={2000}
-          data={uniqueCategories}
-          height={258}
-          loop={true}
-          pagingEnabled={true}
-          snapEnabled={true}
-          width={Dimensions.get("window").width}
-          style={{
-            width: Dimensions.get("window").width,
-            borderRadius: 24,
-          }}
-          mode="parallax"
-          modeConfig={{
-            parallaxScrollingScale: 0.9,
-            parallaxScrollingOffset: 50,
-          }}
-          onProgressChange={progress}
-          renderItem={renderItem}
-        />
-      </View>
-      <View className="px-4 mb-4">
-        <Text className="text-2xl font-bold mb-4 text-gray-900">
-          Our Products
-        </Text>
-        <ProductGrid products={products} />
-      </View>
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        <View id="home-carousel" className="pb-6">
+          <Carousel
+            autoPlayInterval={2000}
+            data={uniqueCategories}
+            height={320}
+            loop={true}
+            pagingEnabled={true}
+            snapEnabled={true}
+            width={Dimensions.get("window").width}
+            style={{
+              width: Dimensions.get("window").width,
+              borderRadius: 24,
+            }}
+            mode="parallax"
+            modeConfig={{
+              parallaxScrollingScale: 0.9,
+              parallaxScrollingOffset: 50,
+            }}
+            onProgressChange={progress}
+            renderItem={renderItem}
+          />
+        </View>
+        <View className="px-4 mb-4">
+          <Text className="text-2xl font-bold mb-4 text-gray-900">
+            Our Products
+          </Text>
+          <ProductGrid products={products} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

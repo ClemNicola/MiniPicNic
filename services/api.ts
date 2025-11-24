@@ -13,7 +13,7 @@ export const api = {
     return data;
   },
 
-  getProductByCategory: async (category: string) => {
+  getProductsByCategory: async (category: string) => {
     const response = await fetch(`${BASE_URL}/category/${category}`);
     const data = await response.json();
     return data;
