@@ -20,16 +20,16 @@ export const api = {
     return data;
   },
 
-  getRandomGif: async (limit: number) => {
+  getRandomGif: async () => {
     try {
       const response = await fetch(
-        `https://api.giphy.com/v1/gifs/trending?api_key=${GIPHY_API_KEY}&limit=${limit}`
+        `https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_API_KEY}&rating=g`
       );
       const data = await response.json();
       return data;
     } catch (error) {
       console.error(error);
-      return [];
+      return null;
     }
   },
 

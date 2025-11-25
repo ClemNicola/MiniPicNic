@@ -10,21 +10,27 @@ export default function GifsIndexScreen() {
   const [search, setSearch] = useState("");
   const [randomGif, setRandomGif] = useState<Gif>();
 
-  const fetchRandomGifs = async () => {
-    try {
-      const response = await api.getRandomGif(1);
-      setRandomGif(response.data[0] as Gif);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const player = useVideoPlayer("", (player) => {
     player.loop = true;
   });
 
+  const fetchRandomGif = async () => {
+    try {
+      const response = await api.getRandomGif();
+      if (response?.data) {
+        setRandomGif(response.data as Gif);
+      }
+    } catch (error) {
+      console.error("Error fetching random GIF:", error);
+    }
+  };
+
   useEffect(() => {
-    fetchRandomGifs();
+    fetchRandomGif();
+
+    // const intervalId = setInterval(fetchRandomGif, 10000);
+
+    // return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
