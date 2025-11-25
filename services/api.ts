@@ -1,4 +1,5 @@
 const BASE_URL = "https://fakestoreapi.com/products";
+const GIPHY_API_KEY = "BluxFAOfAHEf9xg0PdiHD1fqlEAEdlSu";
 
 export const api = {
   getProducts: async () => {
@@ -17,5 +18,31 @@ export const api = {
     const response = await fetch(`${BASE_URL}/category/${category}`);
     const data = await response.json();
     return data;
+  },
+
+  getRandomGif: async (limit: number) => {
+    try {
+      const response = await fetch(
+        `https://api.giphy.com/v1/gifs/trending?api_key=${GIPHY_API_KEY}&limit=${limit}`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  },
+
+  getGifsBySearch: async (search: string, limit: number) => {
+    try {
+      const response = await fetch(
+        `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${search}&limit=${limit}`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   },
 };
