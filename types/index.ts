@@ -17,6 +17,7 @@ export interface GifImage {
 export interface Gif {
   id: string;
   title: string;
+  url: string;
   images: {
     original: GifImage;
     downsized: GifImage;
@@ -25,6 +26,15 @@ export interface Gif {
   };
   username?: string;
   rating: string;
+}
+
+export interface RandomGifResponse {
+  data: Gif;
+  meta: {
+    status: number;
+    msg: string;
+    response_id: string;
+  };
 }
 
 export interface GiphyResponse {

@@ -1,4 +1,3 @@
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Image } from "expo-image";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
@@ -14,7 +13,6 @@ import Animated, {
 } from "react-native-reanimated";
 
 export function SplashScreenAnimate() {
-  const colorScheme = useColorScheme();
   const screenWidth = Dimensions.get("window").width;
   const translateX = useSharedValue(-screenWidth);
   const opacity = useSharedValue(1);
@@ -73,7 +71,7 @@ export function SplashScreenAnimate() {
     return null;
   }
 
-  const backgroundColor = colorScheme === "dark" ? "#000000" : "#ffffff";
+  const backgroundColor = "#ffffff";
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
